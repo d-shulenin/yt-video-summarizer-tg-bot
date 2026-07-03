@@ -1,0 +1,12 @@
+[project]
+name = "yt-video-summarizer-tg-bot"
+version = "0.1.0"
+description = "Telegram bot that summarizes YouTube videos"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "python-telegram-bot>=20.0",
+    "yt-dlp>=2024.1.0",
+    "openai>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
