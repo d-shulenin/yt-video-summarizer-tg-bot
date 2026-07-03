@@ -16,6 +16,7 @@ class VideoInfo:
     transcript: str
     title: str
     channel: str
+    channel_url: str       # YouTube channel URL, empty if unknown
     date_published: str   # ISO-8601 (YYYY-MM-DD), empty string if unknown
     duration: Optional[int]  # seconds
 
@@ -47,6 +48,7 @@ def get_transcript(url: str) -> VideoInfo:
 
     title = info.get("title") or ""
     channel = info.get("channel") or info.get("uploader") or ""
+    channel_url = info.get("channel_url") or info.get("uploader_url") or ""
     duration = info.get("duration")
     raw_date = info.get("upload_date") or ""  # YYYYMMDD from yt-dlp
     date_published = _format_date(raw_date)
@@ -77,6 +79,7 @@ def get_transcript(url: str) -> VideoInfo:
                 transcript=cleaned,
                 title=title,
                 channel=channel,
+                channel_url=channel_url,
                 date_published=date_published,
                 duration=duration,
             )

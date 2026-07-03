@@ -30,7 +30,8 @@ YOUTUBE_URL_RE = re.compile(
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "👋 Send me a YouTube URL and I'll summarize it for you!"
+        "👋 Send me a YouTube URL and I'll summarize it for you!\n\n"
+        "💡 Optional: add custom instructions after the URL to guide the summary."
     )
 
 
@@ -45,6 +46,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         return
 
     url = match.group(0)
+
+    # Extract optional instructions — everything after the URL
+    url_end = match.end()
+    instructions = text[url_end:].strip()
+
     await update.message.reply_text("⏳ Fetching transcript, please wait...")
 
     try:
@@ -65,17 +71,21 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             video_url=url,
             title=video_info.title,
             channel=video_info.channel,
+            channel_url=video_info.channel_url,
             date_published=video_info.date_published,
+            instructions=instructions,
         )
     except Exception as e:
         logger.exception("Unexpected error during summarization")
         await update.message.reply_text(f"❌ Summarization failed: {e}")
         return
 
-    # Send summary as a Markdown file
+    # Send summary as a Markdown file named after the video title
+    safe_title = re.sub(r"[^\w\s-]", "", video_info.title).strip() or "summary"
+    safe_title = re.sub(r"[\s]+", "_", safe_title)
     md_bytes = result.text.encode("utf-8")
     file_obj = io.BytesIO(md_bytes)
-    file_obj.name = "summary.md"
+    file_obj.name = f"{safe_title}.md"
     await update.message.reply_document(
         document=file_obj,
         caption="📄 Here's your summary",

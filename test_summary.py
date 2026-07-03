@@ -53,6 +53,7 @@ def main() -> None:
             video_url=args.url,
             title=video_info.title,
             channel=video_info.channel,
+            channel_url=video_info.channel_url,
             date_published=video_info.date_published,
             template_path=args.template,
         )

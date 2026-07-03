@@ -40,7 +40,9 @@ def summarize(
     video_url: str = "",
     title: str = "",
     channel: str = "",
+    channel_url: str = "",
     date_published: str = "",
+    instructions: str = "",
     template_path: str = "templates/default.txt",
 ) -> SummaryResult:
     """
@@ -68,7 +70,9 @@ def summarize(
     prompt = prompt.replace("{video_info}", video_info_block)
     prompt = prompt.replace("{title}", title)
     prompt = prompt.replace("{channel}", channel)
+    prompt = prompt.replace("{channel_url}", channel_url)
     prompt = prompt.replace("{date_published}", date_published)
+    prompt = prompt.replace("{instructions}", instructions if instructions else "(none — generate a standard summary)")
 
     if video_id:
         # Pre-process: give the model a concrete example in the prompt

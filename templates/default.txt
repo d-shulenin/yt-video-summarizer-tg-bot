@@ -24,7 +24,7 @@ OUTPUT FORMAT:
 
 Title: "{title}"
 
-Channel: {channel}
+Channel: [{channel}]({channel_url})
 
 Publish date: {date_published}
 
@@ -46,6 +46,10 @@ Now process the following video and generate the markdown output:
 ## YouTube Video Information
 
 {video_info}
+
+## Additional Instructions
+
+{instructions}
 
 ## Full Transcript
 
