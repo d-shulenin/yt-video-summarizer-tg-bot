@@ -47,7 +47,7 @@ def summarize(
 ) -> SummaryResult:
     """
     Read the plain-text prompt template, substitute all placeholders
-    ({transcript}, {video_id}, {title}, {channel}, {date_published}),
+    ({transcript}, {video_id}, {channel}, {date_published}),
     call OpenRouter, and return the summary with token usage / price info.
     """
     template = Path(template_path).read_text(encoding="utf-8")
@@ -68,7 +68,6 @@ def summarize(
 
     prompt = template.replace("{transcript}", transcript)
     prompt = prompt.replace("{video_info}", video_info_block)
-    prompt = prompt.replace("{title}", title)
     prompt = prompt.replace("{channel}", channel)
     prompt = prompt.replace("{channel_url}", channel_url)
     prompt = prompt.replace("{date_published}", date_published)
