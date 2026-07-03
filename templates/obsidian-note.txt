@@ -25,7 +25,9 @@ OUTPUT FORMAT:
 
 Video URL: https://www.youtube.com/watch?v={video_id}
 
-Channel: [{channel}]({channel_url})
+Channel: {channel}
+
+Channel URL: {channel_url}
 
 Publish date: {date_published}
 
