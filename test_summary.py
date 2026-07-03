@@ -19,8 +19,8 @@ def main() -> None:
     parser.add_argument("url", help="YouTube video URL")
     parser.add_argument(
         "--template",
-        default="templates/default.txt",
-        help="Path to a custom prompt template (default: templates/default.txt)",
+        default="templates/obsidian-note.txt",
+        help="Path to a custom prompt template (default: templates/obsidian-note.txt)",
     )
     args = parser.parse_args()
 

@@ -43,7 +43,7 @@ def summarize(
     channel_url: str = "",
     date_published: str = "",
     instructions: str = "",
-    template_path: str = "templates/default.txt",
+    template_path: str = "templates/obsidian-note.txt",
 ) -> SummaryResult:
     """
     Read the plain-text prompt template, substitute all placeholders

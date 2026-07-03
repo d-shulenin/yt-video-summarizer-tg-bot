@@ -94,7 +94,7 @@ Optional flags:
 
 | Flag              | Description                                                     |
 | ----------------- | --------------------------------------------------------------- |
-| `--template PATH` | Use a custom prompt template instead of `templates/default.txt` |
+| `--template PATH` | Use a custom prompt template instead of `templates/obsidian-note.txt` |
 
 Example with custom template:
 
