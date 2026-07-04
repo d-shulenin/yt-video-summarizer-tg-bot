@@ -13,6 +13,7 @@ from telegram.ext import (
 import config
 from transcriber import get_transcript
 from summarizer import summarize
+from whitelist import whitelist
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -32,6 +33,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         "👋 Send me a YouTube URL and I'll summarize it for you!\n\n"
         "💡 Optional: add custom instructions after the URL to guide the summary."
+    )
+
+
+async def unauthorized(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text(
+        "❌ You are not authorized to use this bot"
     )
 
 
@@ -107,7 +114,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 def run() -> None:
     app = ApplicationBuilder().token(config.TELEGRAM_BOT_TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(CommandHandler("start", start, filters=whitelist))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & whitelist, handle_message))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & ~whitelist, unauthorized))
     logger.info("Bot started. Polling...")
     app.run_polling()
